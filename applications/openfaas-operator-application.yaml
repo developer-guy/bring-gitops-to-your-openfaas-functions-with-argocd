@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openfaas-operator
+  namespace: argocd
+spec:
+  destination:
+    namespace: openfaas
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      parameters:
+      - name: operator.create
+        value: "true"
+      - name: generateBasicAuth
+        value: "true"
+      - name: functionNamespace
+        value: openfaas-fn
+    path: chart/openfaas
+    repoURL: https://github.com/openfaas/faas-netes.git
+  syncPolicy:
+    automated:
+      selfHeal: true

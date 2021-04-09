@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openfaas-functions
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: functions
+    repoURL: https://github.com/developer-guy/bring-gitops-to-your-openfaas-functions-with-argocd.git
+  syncPolicy:
+    automated:
+      selfHeal: true
